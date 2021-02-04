@@ -73,7 +73,12 @@ def check_uniqueness_in_rows(board: list):
     >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    pass
+    for line in board:
+        line = line[1:-1]
+        only_numbers =  line.replace('*', '')
+        if len(only_numbers) != len(set(only_numbers)):
+            return False
+    return True
 
 
 def check_horizontal_visibility(board: list):
