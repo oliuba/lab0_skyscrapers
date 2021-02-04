@@ -66,11 +66,14 @@ def check_uniqueness_in_rows(board: list):
 
     Return True if buildings in a row have unique length, False otherwise.
 
-    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*543215', \
+        '*35214*', '*41532*', '*2*1***'])
     True
-    >>> check_uniqueness_in_rows(['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_uniqueness_in_rows(['***21**', '452453*', '423145*', '*543215', \
+        '*35214*', '*41532*', '*2*1***'])
     False
-    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', \
+        '*35214*', '*41532*', '*2*1***'])
     False
     """
     for line in board:
@@ -89,11 +92,14 @@ def check_horizontal_visibility(board: list):
      i.e., for line 412453* , hint is 4, and 1245 are the four buildings
       that could be observed from the hint looking to the right.
 
-    >>> check_horizontal_visibility(['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_horizontal_visibility(['***21**', '412453*', '423145*', '*543215', '*35214*', \
+        '*41532*', '*2*1***'])
     True
-    >>> check_horizontal_visibility(['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_horizontal_visibility(['***21**', '452453*', '423145*', '*543215', '*35214*', \
+        '*41532*', '*2*1***'])
     False
-    >>> check_horizontal_visibility(['***21**', '452413*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
+    >>> check_horizontal_visibility(['***21**', '452413*', '423145*', '*543215', '*35214*', \
+        '*41532*', '*2*1***'])
     False
     """
     for line in board:
@@ -118,7 +124,8 @@ def check_horizontal_visibility(board: list):
 
 def check_columns(board: list):
     """
-    Check column-wise compliance of the board for uniqueness (buildings of unique height) and visibility (top-bottom and vice versa).
+    Check column-wise compliance of the board for uniqueness (buildings of unique height)
+    and visibility (top-bottom and vice versa).
 
     Same as for horizontal cases, but aggregated in one function for vertical case, i.e. columns.
 
@@ -147,10 +154,10 @@ def check_skyscrapers(input_path: str):
     >>> check_skyscrapers("check.txt")
     True
     """
-    pass
+    board = read_input(input_path)
+    return check_not_finished_board(board) and check_uniqueness_in_rows(board) and \
+        check_horizontal_visibility(board) and check_columns(board)
 
 
 if __name__ == "__main__":
     print(check_skyscrapers("check.txt"))
-# from doctest import testmod
-# testmod()
