@@ -32,7 +32,10 @@ def left_to_right_check(input_line: str, pivot: int):
     >>> left_to_right_check("452453*", 5)
     False
     """
-    pass
+    for index in range(1, pivot):
+        if int(input_line[index]) > int(input_line[pivot]):
+            return False
+    return True
 
 
 def check_not_finished_board(board: list):
@@ -121,5 +124,5 @@ def check_skyscrapers(input_path: str):
 
 if __name__ == "__main__":
     print(check_skyscrapers("check.txt"))
-from doctest import testmod
-testmod()
+# from doctest import testmod
+# testmod()
