@@ -28,14 +28,29 @@ def left_to_right_check(input_line: str, pivot: int) -> bool:
     True
     >>> left_to_right_check("452453*", 5)
     False
+    >>> left_to_right_check("132345*", 3)
+    True
     """
-    for index in range(1, pivot):
-        try:
-            if int(input_line[index]) >= int(input_line[pivot]):
-                return False
-        except ValueError:
-            pass
-    return True
+    only_board = input_line[1:-1]
+    max_height = max(only_board)
+    seen_buildings = 0
+    max_previous = 0
+    for number in only_board:
+        if number != max_height:
+            if int(number) > max_previous:
+                seen_buildings += 1
+                max_previous = int(number)
+        else:
+            seen_buildings += 1
+            break
+    return seen_buildings == pivot
+    # for index in range(1, pivot):
+    #     try:
+    #         if int(input_line[index]) >= int(input_line[pivot]):
+    #             return False
+    #     except ValueError:
+    #         pass
+    # return True
 
 
 def check_not_finished_board(board: list) -> bool:
@@ -106,20 +121,10 @@ def check_horizontal_visibility(board: list) -> bool:
     for line in board:
         left_hint = line[0]
         right_hint = line[-1]
-        if left_hint.isdigit():
-            seen_buildings = 0
-            for pivot in range(1, len(line) - 1):
-                if left_to_right_check(line, pivot):
-                    seen_buildings += 1
-            if int(left_hint) != seen_buildings:
-                return False
-        if right_hint.isdigit():
-            seen_buildings = 0
-            for pivot in range(1, len(line) - 1):
-                if left_to_right_check(line[::-1], pivot):
-                    seen_buildings += 1
-            if int(right_hint) != seen_buildings:
-                return False
+        if left_hint.isdigit() and not left_to_right_check(line, int(left_hint)):
+            return False
+        if right_hint.isdigit() and not left_to_right_check(line[::-1], int(right_hint)):
+            return False
     return True
 
 
