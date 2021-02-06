@@ -9,9 +9,6 @@ def read_input(path: str) -> list:
     """
     Read game board file from path.
     Return list of str.
-
-    >>> read_input("check.txt")
-    ['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***']
     """
     with open(path) as board:
         board_lines = [line.strip() for line in board]
@@ -33,8 +30,11 @@ def left_to_right_check(input_line: str, pivot: int) -> bool:
     False
     """
     for index in range(1, pivot):
-        if int(input_line[index]) > int(input_line[pivot]):
-            return False
+        try:
+            if int(input_line[index]) >= int(input_line[pivot]):
+                return False
+        except ValueError:
+            pass
     return True
 
 
@@ -76,7 +76,8 @@ def check_uniqueness_in_rows(board: list) -> bool:
         '*35214*', '*41532*', '*2*1***'])
     False
     """
-    for line in board:
+    board_without_hints = board[1:-1]
+    for line in board_without_hints:
         line = line[1:-1]
         only_numbers =  line.replace('*', '')
         if len(only_numbers) != len(set(only_numbers)):
@@ -142,7 +143,7 @@ def check_columns(board: list) -> bool:
         for line in board:
             vertical += line[ind]
         vertical_lines[ind] = vertical
-    return check_horizontal_visibility(vertical_lines)
+    return check_horizontal_visibility(vertical_lines) and check_uniqueness_in_rows(vertical_lines)
 
 
 def check_skyscrapers(input_path: str) -> bool:
@@ -150,14 +151,7 @@ def check_skyscrapers(input_path: str) -> bool:
     Main function to check the status of skyscraper game board.
     Return True if the board status is compliant with the rules,
     False otherwise.
-
-    >>> check_skyscrapers("check.txt")
-    True
     """
     board = read_input(input_path)
     return check_not_finished_board(board) and check_uniqueness_in_rows(board) and \
         check_horizontal_visibility(board) and check_columns(board)
-
-
-if __name__ == "__main__":
-    print(check_skyscrapers("check.txt"))
