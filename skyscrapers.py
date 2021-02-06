@@ -44,13 +44,6 @@ def left_to_right_check(input_line: str, pivot: int) -> bool:
             seen_buildings += 1
             break
     return seen_buildings == pivot
-    # for index in range(1, pivot):
-    #     try:
-    #         if int(input_line[index]) >= int(input_line[pivot]):
-    #             return False
-    #     except ValueError:
-    #         pass
-    # return True
 
 
 def check_not_finished_board(board: list) -> bool:
